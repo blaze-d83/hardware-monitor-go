@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hardware Monitor</title>
+  </head>
+  <body>
+    <script
+      src="https://unpkg.com/htmx.org@2.0.1"
+      integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/htmx-ext-ws@2.0.0/ws.js"></script>
+    <h1>Hardware Monitor</h1>
+    <div hx-ext="ws" ws-connect="ws://localhost:8080/ws">
+      <div id="update-timestamp">Loading data..</div>
+      <div id="monitor-data">
+        <div id="system-data"></div>
+        <div id="disk-data"></div>
+        <div id="cpu-data"></div>
+      </div>
+    </div>
+  </body>
+</html>
