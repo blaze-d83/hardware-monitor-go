@@ -20,7 +20,7 @@
 - [x] Better data model
 - [x] Better data handling
 - [ ] Better Error Handling
-- [ ] Write tests
+- [x] Write tests
 
 ### Frontend
 - [ ] Use templ to generate templates
