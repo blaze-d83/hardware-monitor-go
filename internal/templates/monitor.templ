@@ -1,41 +1,102 @@
 package templates
 
 import (
-"fmt"
-"strconv"
+	"fmt"
+	"strconv"
 )
 
-templ MonitorSection(timeStamp string, hostName string, totalMemory uint64, usedMemory uint64, os string, totalDiskSpace uint64, freeDiskSpace uint64, cpuModelName string, cores uint8){
-<div hx-swap-oob="innerHTML:#update-timestamp"> { timeStamp } </div>
-<div hx-swap-oob="innerHTML:#system-data">
-    <div>
-        Host name: { hostName }
-    </div>
-    <div>
-        Total Memory: { fmt.Sprintf("%d", totalMemory) }
-    </div>
-    <div>
-        Used Memory: {fmt.Sprintf("%d", usedMemory) }
-    </div>
-    <div>
-        OS: { os }
-    </div>
-</div>
-<div hx-swap-oob="innerHTML:#disk-data">
-    <div>
-        Total Disk Space: { fmt.Sprintf("%d", totalDiskSpace) }
-    </div>
-    <div>
-        Free Disk Space: { fmt.Sprintf("%d", freeDiskSpace) }
-    </div>
-</div>
-<div hx-swap-oob="innerHTML:#cpu-data">
-    <div>
-        CPU: { cpuModelName }
-    </div>
-    <div>
-        Cores: { strconv.FormatUint(uint64(cores), 10)}
-    </div>
-</div>
+templ MonitorSection(timeStamp string, hostName string, totalMemory uint64, usedMemory uint64, os string, totalDiskSpace uint64, freeDiskSpace uint64, cpuModelName string, cores uint8) {
+	<style type="text/css">
+		/* Container for Monitor Data */
+		#monitor-data {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin: 20px auto;
+			padding: 30px;
+			width: 80%;
+			max-width: 1200px;
+			background-color: #ffffff;
+			border-radius: 12px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+		}
 
+		/* Update Timestamp */
+		#update-timestamp {
+			font-size: 16px;
+			color: #888;
+			margin-bottom: 20px;
+			font-style: italic;
+		}
+
+		/* Data Sections */
+		#system-data, #disk-data, #cpu-data {
+			width: 100%;
+			margin-bottom: 20px;
+			padding: 20px;
+			border-radius: 8px;
+			background-color: #f8f9fa;
+			border: 1px solid #dee2e6;
+		}
+
+		#system-data h2, #disk-data h2, #cpu-data h2 {
+			margin-top: 0;
+			font-size: 1.5em;
+			color: #343a40;
+		}
+
+		#system-data div, #disk-data div, #cpu-data div {
+			margin: 10px 0;
+			font-size: 1.1em;
+			color: #495057;
+		}
+
+		/* Responsive Design */
+		@media (max-width: 768px) {
+			#monitor-data {
+				width: 95%;
+				padding: 20px;
+			}
+
+			#system-data, #disk-data, #cpu-data {
+				padding: 15px;
+			}
+		}
+	</style>
+
+	<div hx-swap-oob="innerHTML:#update-timestamp"> { timeStamp } </div>
+	<div hx-swap-oob="innerHTML:#system-data">
+		<h2>System Information</h2>
+		<div>
+			Host name: { hostName }
+		</div>
+		<div>
+			Total Memory: { fmt.Sprintf("%d", totalMemory) }
+		</div>
+		<div>
+			Used Memory: { fmt.Sprintf("%d", usedMemory) }
+		</div>
+		<div>
+			OS: { os }
+		</div>
+	</div>
+	<div hx-swap-oob="innerHTML:#disk-data">
+		<h2>Disk Information</h2>
+		<div>
+			Total Disk Space: { fmt.Sprintf("%d", totalDiskSpace) }
+		</div>
+		<div>
+			Free Disk Space: { fmt.Sprintf("%d", freeDiskSpace) }
+		</div>
+	</div>
+	<div hx-swap-oob="innerHTML:#cpu-data">
+		<h2>CPU Information</h2>
+		<div>
+			CPU: { cpuModelName }
+		</div>
+		<div>
+			Cores: { strconv.FormatUint(uint64(cores), 10) }
+		</div>
+	</div>
 }
+

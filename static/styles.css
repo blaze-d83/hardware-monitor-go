@@ -1,0 +1,80 @@
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #007bff;
+    margin: 40px 0;
+    font-size: 2.5em;
+    font-weight: 600;
+}
+
+/* Container for Monitor Data */
+#monitor-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    padding: 30px;
+    width: 80%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Update Timestamp */
+#update-timestamp {
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* Data Sections */
+#system-data,
+#disk-data,
+#cpu-data {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+#system-data h2,
+#disk-data h2,
+#cpu-data h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #343a40;
+}
+
+#system-data div,
+#disk-data div,
+#cpu-data div {
+    margin: 10px 0;
+    font-size: 1.1em;
+    color: #495057;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #monitor-data {
+        width: 95%;
+        padding: 20px;
+    }
+
+    #system-data,
+    #disk-data,
+    #cpu-data {
+        padding: 15px;
+    }
+}
