@@ -70,4 +70,3 @@ func GetCPUInfo() (*CPUInfo, error) {
 		Cores:     len(cpuStat),
 	}, nil
 }
-

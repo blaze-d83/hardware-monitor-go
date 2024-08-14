@@ -104,4 +104,3 @@ func TestServer_MonitorHardware(t *testing.T) {
 		t.Fatal("timeout waiting for broadcast message")
 	}
 }
-

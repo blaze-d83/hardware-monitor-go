@@ -1,0 +1,41 @@
+package templates
+
+import (
+"fmt"
+"strconv"
+)
+
+templ MonitorSection(timeStamp string, hostName string, totalMemory uint64, usedMemory uint64, os string, totalDiskSpace uint64, freeDiskSpace uint64, cpuModelName string, cores uint8){
+<div hx-swap-oob="innerHTML:#update-timestamp"> { timeStamp } </div>
+<div hx-swap-oob="innerHTML:#system-data">
+    <div>
+        Host name: { hostName }
+    </div>
+    <div>
+        Total Memory: { fmt.Sprintf("%d", totalMemory) }
+    </div>
+    <div>
+        Used Memory: {fmt.Sprintf("%d", usedMemory) }
+    </div>
+    <div>
+        OS: { os }
+    </div>
+</div>
+<div hx-swap-oob="innerHTML:#disk-data">
+    <div>
+        Total Disk Space: { fmt.Sprintf("%d", totalDiskSpace) }
+    </div>
+    <div>
+        Free Disk Space: { fmt.Sprintf("%d", freeDiskSpace) }
+    </div>
+</div>
+<div hx-swap-oob="innerHTML:#cpu-data">
+    <div>
+        CPU: { cpuModelName }
+    </div>
+    <div>
+        Cores: { strconv.FormatUint(uint64(cores), 10)}
+    </div>
+</div>
+
+}

@@ -1,12 +1,14 @@
 package server
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/blaze-d83/hardware-monitor-go/internal/hardware"
+	"github.com/blaze-d83/hardware-monitor-go/internal/templates"
 	"github.com/coder/websocket"
 )
 
@@ -90,24 +92,38 @@ func (s *Server) MonitorHardware() {
 
 			timeStamp := time.Now().Format("2006-01-02 15:04:05")
 
-			html :=
-				`<div hx-swap-oob="innerHTML:#update-timestamp">` + timeStamp + `</div>` +
-					`<div hx-swap-oob="innerHTML:#system-data">` +
-					`Hostname: ` + systemInfo.HostName+ ` ` +
-					`Total Memory: ` + fmt.Sprint(systemInfo.TotalMem) + ` ` +
-					`Used Memory: ` + fmt.Sprint(systemInfo.UsedMem) + ` ` +
-					`OS: ` + systemInfo.OS +
-					`</div>` +
-					`<div hx-swap-oob="innerHTML:#disk-data">` +
-					`Total Disk Space: ` + fmt.Sprint(diskInfo.TotalDiskSpace) + ` ` +
-					`Free Disk Space: ` + fmt.Sprint(diskInfo.FreeDiskSpace) +
-					`</div>` +
-					`<div hx-swap-oob="innerHTML:#cpu-data">` +
-					`CPU: ` + cpuInfo.ModelName + ` ` +
-					`Cores: ` + fmt.Sprint(cpuInfo.Cores) +
-					`</div>`
+			monitorData := &Metrics{
+				HostName:       systemInfo.HostName,
+				TotalMemory:    systemInfo.TotalMem,
+				UsedMemory:     systemInfo.UsedMem,
+				OS:             systemInfo.OS,
+				TotalDiskSpace: diskInfo.TotalDiskSpace,
+				FreeDiskSpace:  diskInfo.FreeDiskSpace,
+				CPUModelName:   cpuInfo.ModelName,
+				Cores:          uint8(cpuInfo.Cores),
+			}
 
-			s.broadcast([]byte(html))
+			monitorComponent := templates.MonitorSection(
+				timeStamp,
+				monitorData.HostName,
+				monitorData.TotalMemory,
+				monitorData.UsedMemory,
+				monitorData.OS,
+				monitorData.TotalDiskSpace,
+				monitorData.FreeDiskSpace,
+				monitorData.CPUModelName,
+				monitorData.Cores)
+
+			var buf bytes.Buffer
+			err = monitorComponent.Render(context.Background(), &buf)
+			if err != nil {
+				fmt.Println("Error rendering the component:", err)
+				continue
+			}
+
+			monitorBytes := buf.Bytes()
+
+			s.broadcast(monitorBytes)
 			time.Sleep(2 * time.Second)
 		}
 	}()
