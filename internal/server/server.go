@@ -25,6 +25,6 @@ func NewServer() *Server {
 }
 
 func (s *Server) Start() error {
-	fmt.Println("Sarting server on port: 8080")
+	fmt.Println("Starting server on port: 8080")
 	return http.ListenAndServe(":8080", s.mux)
 }
